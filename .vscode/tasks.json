@@ -1,0 +1,55 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "build",
+            "command": "D:\\Compile\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-D GLEW_STATIC",
+                "-fdiagnostics-color=always",
+                "-g",
+                // "${file}",
+                "${workspaceFolder}\\*.cpp",
+                "${fileDirname}/depends/libglfw3.a",
+                "${fileDirname}/depends/glew32s.lib",
+                "-lopengl32",
+                "-lgdi32",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "--include-directory=${fileDirname}/depends/include"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "g++ Build"
+        },
+        {
+            "label": "run",
+            "type": "process",
+            "command": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            //依赖build task(刚刚创建的那个)，执行该task之前先执行build
+            "dependsOn": [
+                "build"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                //自动聚焦
+                "focus": true,
+                //共享控制台，利用之前的控制台，并不重新创建
+                "panel": "shared",
+                "showReuseMessage": true,
+                //启动之前清理控制台输出
+                "clear": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
