@@ -4,6 +4,9 @@
 // Include GLFW
 #include <GLFW/glfw3.h>
 
+#include <glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -83,12 +86,22 @@ int main(void)
         -0.5f, 0.5f, 0.0f, 1.0f,  // 3
     };
 
+    // float position[] = {
+    //     -0.5f, -0.5f, 0.0f, 0.0f, // 0
+    //     0.5f, -0.5f, 1.0f, 0.0f,  // 1
+    //     0.5f, 0.5f, 1.0f, 1.0f,   // 2
+    //     -0.5f, 0.5f, 0.0f, 1.0f,  // 3
+    // };    
+
     unsigned int indices[] = {
         0, 1, 2, //
         2, 3, 0};
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glm::mat4 proj = glm::ortho(-1.0f, 2.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+    // glm::mat4 proj = glm::ortho(-0.5f, 0.5f, -1.0f, 1.0f, -1.0f, 1.0f);
 
     {
         VertexArray va;
@@ -106,7 +119,8 @@ int main(void)
 
         Texture texture("./depends/res/kawayi.png");
         texture.Bind();
-        shader.SetUnifoem1i("u_Texture", 0);
+        shader.SetUniform1i("u_Texture", 0);
+        shader.SetUniformMat4f("n_MVP", proj);
         Renderer renderer;
 
         float red = 0.0f;

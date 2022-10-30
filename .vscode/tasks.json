@@ -16,7 +16,8 @@
                 "-lgdi32",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "--include-directory=${fileDirname}/depends/include"
+                "--include-directory=${fileDirname}/depends/include",
+                "--include-directory=${fileDirname}/depends/include/glm"
             ],
             "options": {
                 "cwd": "${fileDirname}"
